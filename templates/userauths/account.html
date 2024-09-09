@@ -1,0 +1,58 @@
+{% extends "partials/base.html" %} {% block content %}
+<link rel="stylesheet" href="static/css/styles.css" />
+
+<div class="profile-container">
+  <div class="profile-sidebar">
+    <h1>Profile</h1>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Bio:</strong> {{ user.bio }}</p>
+    <a href="{% url 'userauths:edit-profile' %}" class="edit-profile-btn"
+      >Edit Profile</a
+    >
+  </div>
+</div>
+
+<style>
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 500vh;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+
+  .profile-sidebar {
+    width: 700px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+  }
+
+  .edit-profile-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .edit-profile-btn:hover {
+    background-color: #4cae4c;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+</style>
+
+{% endblock content %}

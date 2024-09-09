@@ -1,0 +1,51 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Sign up | Best Finance App{% endblock %}
+
+{% block content %}
+<div>
+  <h2>Sign up</h2>
+  {% if form.errors %}
+  <div class="alert alert-danger">
+    <strong>{{ form.errors }}}</strong>
+    {{ form.non_field_errors }}
+  </div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      {% comment %} {{ form.username.label_tag }} {% endcomment %}
+      {{ form.username }} 
+      {% if form.username.errors %}
+          <div class="error">{{ form.username.errors }}</div>
+      {% endif %}
+    </div>
+    <div>
+      {% comment %} {{ form.email.label_tag }} {% endcomment %}
+      {{ form.email }} 
+      {% if form.email.errors %}
+          <div class="error">{{ form.email.errors }}</div>
+      {% endif %}
+    </div>
+    <div>
+      {% comment %} {{ form.password1.label_tag }} {% endcomment %}
+      {{ form.password1 }} 
+      {% if form.password1.errors %}
+          <div class="error">{{ form.password1.errors }}</div>
+      {% endif %}
+    </div>
+    <div>
+      {% comment %} {{ form.password2.label_tag }} {% endcomment %}
+      {{ form.password2 }} 
+      {% if form.password2.errors %}
+          <div class="error">{{ form.password2.errors }}</div>
+      {% endif %}
+    </div>
+    <button type="submit">Sign up</button>
+  </form>
+  <p>Already have an account? <button><a href="{% url 'userauths:sign-in' %}">Login here</a></button></p>
+</div>
+</body>
+
+</html>
+{% endblock content %}
