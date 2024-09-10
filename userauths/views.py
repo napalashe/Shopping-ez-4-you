@@ -24,32 +24,31 @@ def register_view(request):
     return render(request, 'userauths/sign-up.html', {'form': form})
 
 
+from django.contrib.auth.forms import AuthenticationForm
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('core:index')
 
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-    
-        try:
-            user = User.objects.get(email=email)
-        except:
-            messages.warning(request, f'User with {email} does not exist.')
-        
-        user  = authenticate(request, email=email, password = password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, 'You are logged in!')
-            return redirect('core:index')
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Welcome back, {username}!')
+                return redirect('core:index')
+            else:
+                messages.error(request, 'Invalid username or password.')
         else:
-            messages.warning(request, 'Profile does not exist.')
-    context = {
+            messages.error(request, 'Invalid login credentials.')
 
-    }
+    else:
+        form = AuthenticationForm()
 
-    return render(request, 'userauths/sign-in.html', context)
+    return render(request, 'userauths/sign-in.html', {'form': form})
 
 @login_required
 def account_view(request):

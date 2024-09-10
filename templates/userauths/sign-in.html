@@ -1,10 +1,17 @@
-{% extends "partials/base.html" %} {% block title %} Login {% endblock %}
-<!--so it doesnt break-->
+{% extends "partials/base.html" %} {% block title %}Login{% endblock %}
+<!--here is the code to view the login page -->
 {% block content %}
 <div class="container mt-5">
   <h2 class="text-center">Login</h2>
   <div class="row justify-content-center">
     <div class="col-md-6">
+      {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
       <form method="post">
         {% csrf_token %}
         <div class="mb-3">
