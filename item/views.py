@@ -1,9 +1,5 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Item
 
 def items(request):
@@ -18,7 +14,7 @@ def items(request):
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
-    return render(request, 'item/items.html', {
+    return render(request, 'core/index.html', {
         'items': items,
         'query': query,
         'categories': categories,
@@ -26,10 +22,10 @@ def items(request):
     })
 
 def detail(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:3]
+    item = get_object_or_404(Item, pk=pk)  
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[:3]
 
-    return render(request, 'item/detail.html', {
+    return render(request, 'item/details.html', {
         'item': item,
         'related_items': related_items
     })

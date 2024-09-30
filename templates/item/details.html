@@ -1,0 +1,49 @@
+{% extends "partials/base.html" %} {% block title %}{{ item.name }} Details
+{% comment %} <!-- this is to help!>  {% endcomment %}
+ {%endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid" />
+    </div>
+    <div class="col-md-6">
+      <h1>{{ item.name }}</h1>
+      <p>{{ item.description }}</p>
+      <h4>Price: ${{ item.price }}</h4>
+      <p>Category: {{ item.category.name }}</p>
+      <p>Created by: {{ item.created_by.username }}</p>
+      <p>Added on: {{ item.created_at }}</p>
+
+      <a href="#" class="btn btn-primary">Add to Cart</a>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h3>Related Items</h3>
+    <div class="col-md-12">
+      <div class="row">
+        {% for related_item in related_items %}
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="{{ related_item.image.url }}"
+              class="card-img-top"
+              alt="{{ related_item.name }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ related_item.name }}</h5>
+              <p class="card-text">${{ related_item.price }}</p>
+              <a
+                href="{% url 'item:detail' related_item.id %}"
+                class="btn btn-primary"
+                >View Details</a
+              >
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
