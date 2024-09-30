@@ -1,0 +1,99 @@
+<!-- item/templates/item/detail.html -->
+
+{% extends "item/base.html" %} {% load static %} {% block title %} {{ item.name
+}} - Shopping 4 You! {% endblock %} {% block content %}
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row">
+      <!-- Item Image -->
+      <div class="col-md-6">
+        {% if item.image %}
+        <img
+          src="{{ item.image.url }}"
+          alt="{{ item.name }}"
+          class="img-fluid"
+        />
+        {% else %}
+        <img
+          src="{% static 'images/default_item.jpg' %}"
+          alt="Default Image"
+          class="img-fluid"
+        />
+        {% endif %}
+      </div>
+
+      <!-- Item Details -->
+      <div class="col-md-6">
+        <h2 class="fw-bolder">{{ item.name }}</h2>
+        <div class="fs-5 mb-4">
+          <span>Price: ${{ item.price }}</span>
+        </div>
+        <p>{{ item.description }}</p>
+        <p><strong>Category:</strong> {{ item.category.name }}</p>
+        <p><strong>Posted by:</strong> {{ item.created_by.username }}</p>
+        <p>
+          <strong>Posted on:</strong> {{ item.created_at|date:"F j, Y, g:i a" }}
+        </p>
+
+        {% if not item.is_sold %}
+        <a href="#" class="btn btn-success">Purchase</a>
+        {% else %}
+        <span class="badge bg-danger">Sold</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Related Items -->
+    <div class="mt-5">
+      <h3>Related Items</h3>
+      <div
+        class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+      >
+        {% for related in related_items %}
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Related Item Image -->
+            {% if related.image %}
+            <img
+              class="card-img-top"
+              src="{{ related.image.url }}"
+              alt="{{ related.name }}"
+              style="height: 200px; object-fit: cover"
+            />
+            {% else %}
+            <img
+              class="card-img-top"
+              src="{% static 'images/default_item.jpg' %}"
+              alt="Default Image"
+              style="height: 200px; object-fit: cover"
+            />
+            {% endif %}
+
+            <!-- Related Item Details -->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder">{{ related.name }}</h5>
+                Price: ${{ related.price }}
+              </div>
+            </div>
+
+            <!-- Related Item Actions -->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <a
+                  class="btn btn-outline-dark mt-auto"
+                  href="{% url 'item:detail' related.id %}"
+                  >View Details</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No related items found.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
