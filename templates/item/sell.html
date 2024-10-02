@@ -1,0 +1,10 @@
+{% extends "partials/base.html" %} {% block title %}Sell an Item{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center">Sell an Item</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+{% endblock %}

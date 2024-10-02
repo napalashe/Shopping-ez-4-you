@@ -1,8 +1,14 @@
-{% extends "partials/base.html" %} {% block title %} Home - Shopping 4 You!
-<!--comment to make this work right-->
+{% extends "partials/base.html" %} {% block title %} Home - Shopping eZ 4 You!
 {% endblock %} {% block content %}
 <section class="py-5">
   <div class="container px-4 px-lg-5 mt-5">
+    <!-- Banner Section -->
+    <div class="text-center">
+      <h1>Shop in style</h1>
+      <p>Find your perfect desire</p>
+    </div>
+
+    <!-- Newest items Section -->
     <h2 class="mb-4 text-center">Newest items</h2>
     <div
       class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
@@ -10,24 +16,22 @@
       {% for item in items %}
       <div class="col mb-5">
         <div class="card h-100">
-          <!-- Product image-->
-
+          <!-- Product image -->
           <img
             class="card-img-top"
             src="{{ item.image.url }}"
             alt="{{ item.name }}"
           />
 
-          <!-- Product details-->
+          <!-- Product details -->
           <div class="card-body p-4">
             <div class="text-center">
-              <!-- Product name-->
               <h5 class="fw-bolder">{{ item.name }}</h5>
-              <!-- Product price-->
               Price: {{ item.price }}
             </div>
           </div>
-          <!-- Product actions-->
+
+          <!-- Product actions -->
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
               <a
@@ -42,6 +46,7 @@
       {% endfor %}
     </div>
 
+    <!-- Categories Section -->
     <h2 class="mb-4 text-center">Categories</h2>
     <div
       class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
@@ -49,16 +54,15 @@
       {% for category in categories %}
       <div class="col mb-5">
         <div class="card h-100">
-          <!-- Category details-->
+          <!-- Category details -->
           <div class="card-body p-4">
             <div class="text-center">
-              <!-- Category name-->
               <h5 class="fw-bolder">{{ category.name }}</h5>
-              <!-- Number of items-->
               {{ category.items.count }} items
             </div>
           </div>
-          <!-- Category link-->
+
+          <!-- Category link -->
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
               <a class="btn btn-outline-dark mt-auto" href="#">View Category</a>

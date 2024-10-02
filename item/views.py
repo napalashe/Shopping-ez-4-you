@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import Category, Item
+from .forms import ItemForm
+from django.contrib.auth.decorators import login_required
 
 def items(request):
     query = request.GET.get('query', '')
@@ -29,3 +31,17 @@ def detail(request, pk):
         'item': item,
         'related_items': related_items
     })
+
+@login_required
+def sell(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user  # Set the user as the seller
+            item.save()
+            return redirect('item:items')  # Redirect to the main page after submission
+    else:
+        form = ItemForm()
+
+    return render(request, 'item/sell.html', {'form': form})
