@@ -1,6 +1,5 @@
-{% extends "partials/base.html" %} {% block title %}{{ item.name }} Details
-{% comment %} <!-- this is to help!>  {% endcomment %}
- {%endblock %} {% block content %}
+{% extends "partials/base.html" %} {% block title %} {{ item.name }} Details {%
+endblock %} {% block content %}
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
@@ -14,7 +13,12 @@
       <p>Created by: {{ item.created_by.username }}</p>
       <p>Added on: {{ item.created_at }}</p>
 
-      <a href="#" class="btn btn-primary">Add to Cart</a>
+      <!-- Add to Cart button -->
+      <a
+        href="{% url 'item:add_to_cart' item.id %}"
+        class="btn btn-primary mt-2 add-to-cart"
+        >Add to Cart</a
+      >
     </div>
   </div>
 
@@ -37,6 +41,11 @@
                 href="{% url 'item:detail' related_item.id %}"
                 class="btn btn-primary"
                 >View Details</a
+              >
+              <a
+                href="{% url 'item:add_to_cart' related_item.id %}"
+                class="btn btn-success add-to-cart"
+                >Add to Cart</a
               >
             </div>
           </div>
